@@ -29,5 +29,16 @@ public class ProductResponse {
 
       return product;
     }
+    public ProductResponse ofProduct(Product product){
+        ProductResponse productResponse = new ProductResponse();
+        productResponse.setId(product.getId());
+        productResponse.setName(product.getName());
+        productResponse.setPrice(product.getPrice());
+        productResponse.setDescription(product.getDescription());
+        productResponse.setPictureUrl(productResponse.getPictureUrl());
+
+        return productResponse;
+
+    }
 
 }

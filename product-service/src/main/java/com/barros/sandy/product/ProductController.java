@@ -26,4 +26,22 @@ public class ProductController {
     public ResponseEntity<List<ProductResponse>> getAllProducts(){
         return ResponseEntity.ok(productService.getAllProducts());
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductResponse> getProductById(@PathVariable Long id){
+        //return ResponseEntity.ok(productService.getProductById(id));
+        return ResponseEntity.ok().body(productService.getProductById(id));
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteById(@PathVariable Long id){
+        productService.deleteById(id);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void updateProduct(@RequestBody ProductRequest productRequest, @PathVariable Long id){
+         productService.updateProduct(productRequest, id);
+    }
+
 }

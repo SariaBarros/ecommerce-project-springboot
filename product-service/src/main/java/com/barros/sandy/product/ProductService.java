@@ -4,6 +4,7 @@ import com.barros.sandy.product.dto.ProductRequest;
 import com.barros.sandy.product.dto.ProductResponse;
 import com.barros.sandy.product.model.Product;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,5 +35,24 @@ public class ProductService {
                 .build()).toList();
 
         return productResponseList;
+    }
+    public ProductResponse getProductById(Long id) {
+        Product product = productRepository.findById(id).get();
+        ProductResponse productResponse = new ProductResponse().ofProduct(product);
+        return productResponse;
+    }
+    public void deleteById(Long id) {
+        productRepository.deleteById(id);
+    }
+
+    public void updateProduct(ProductRequest productRequest, Long id) {
+         productRepository.findById(id).map(
+                product -> {
+                    product.setName(productRequest.getName());
+                    product.setPrice(productRequest.getPrice());
+                    product.setDescription(productRequest.getDescription());
+                    product.setPictureUrl(productRequest.getPictureUrl());
+                    return productRepository.save(product);
+                }).orElseThrow(IllegalArgumentException::new);
     }
 }
